@@ -1,0 +1,24 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Document
+        link(rel="stylesheet", href="/task.css")
+    body 
+        form(action="/add", method="POST")
+            label(for="task") Task: 
+            input(type="text", name="task", class="task")
+            button(type="submit") Add
+        section 
+            if tasks.length > 0
+                .grid 
+                    each task in tasks 
+                        h1 #{task.task}
+                        form(action=('/edit/'+task.id) method="POST")
+                            input.editInput(type="text", name="editedTask")
+                            button.editBtn(type="submit") Edit
+                        form.save(action=('/save'+task.id) method="POST")
+                            button(type="submit") Save
+                        form(action="/delete" method="DELETE") 
