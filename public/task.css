@@ -1,5 +1,47 @@
+@font-face {
+  font-family: "brandon_grotesqueblack";
+  src: url("brandon_blk-webfont.woff2") format("woff2"),
+    url("brandon_blk-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
 .saveinput,
 .saveBtn {
   display: none;
   opacity: 0;
+}
+.addContainer {
+  display: none;
+  opacity: 0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* HEADER */
+header {
+  display: flex;
+  flex-direction: row;
+}
+.logo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.logoTitle {
+  color: rgb(141, 30, 255);
+  font-family: "brandon_grotesqueblack";
+  font-size: 50px;
+}
+.logoImg {
+  width: auto;
+  height: 60px;
 }

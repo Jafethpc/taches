@@ -38,6 +38,8 @@ app.post("/add", (req, res) => {
   // PUSHING DATA TO JSON FILE
   parsedData.push({
     task: `${req.body.task}`,
+    day: `${req.body.day}`,
+    month: `${req.body.month}`,
     id: Date.now(),
   });
 
