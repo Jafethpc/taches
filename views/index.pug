@@ -8,17 +8,32 @@ html(lang="en")
         link(rel="stylesheet", href="/task.css")
     body 
         form(action="/add", method="POST")
-            label(for="task") Task: 
-            input(type="text", name="task", class="task")
-            button(type="submit") Add
+            section
+                section
+                    p Task 
+                    input(type="text", name="task", class="task")
+                section
+                    p Date
+                    input(type="text", name="day", class="day")
+                    p /
+                    input(type="text", name="month", class="month")
+            section
+                button(type="submit") Add
         section 
             if tasks.length > 0
                 .grid 
-                    each task in tasks 
-                        h1 #{task.task}
-                        form(action=('/edit/'+task.id) method="POST")
-                            input.editInput(type="text", name="editedTask")
-                            button.editBtn(type="submit") Edit
-                        form.save(action=('/save'+task.id) method="POST")
-                            button(type="submit") Save
-                        form(action="/delete" method="DELETE") 
+                    each task in tasks
+                        section
+                            form(action=("/complete/" + task.id) method="POST") 
+                                button.completeBtn(type="submit") &#10003;
+                            section.dateContainer 
+                                p.dateTitle 
+                                p.date #{task.day} / #{task.month}
+                            p.taskTitle #{task.task}
+                            button.editBtn Edit
+                            form(action=('/save/'+task.id) method="POST")
+                                input.saveinput(type="text", name="editedTask" placeholder=task.task)
+                                button.saveBtn(type="submit") Save
+                            form(action=('/delete/' + task.id) method="POST")
+                                button.deleteBtn(type="submit") Delete
+        script(src="tt.js")

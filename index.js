@@ -1,8 +1,8 @@
 const fs = require("fs");
 const path = require("path");
-const pug = require("pug");
 const express = require("express");
 const bodyParser = require("body-parser");
+const { parse } = require("path");
 
 const app = express();
 
@@ -35,7 +35,6 @@ app.post("/add", (req, res) => {
   // PARSED JSON
   const parsedData = JSON.parse(data);
 
-  console.log(req.body.task);
   // PUSHING DATA TO JSON FILE
   parsedData.push({
     task: `${req.body.task}`,
@@ -56,15 +55,41 @@ app.post("/add", (req, res) => {
 });
 
 // EDIT ROUTE
-app.post("/edit/:id", (req, res) => {
+app.post("/save/:id", (req, res) => {
   const data = fs.readFileSync(__dirname + "/data.json");
 
   const parsedData = JSON.parse(data);
-  console.log(req.params.id);
+  parsedData.find((e) => {
+    if (e.id == req.params.id) {
+      e.task = req.body.editedTask;
+      const stringifiedData = JSON.stringify(parsedData);
+      fs.writeFileSync("data.json", stringifiedData, (err) => {
+        if (err) throw err;
+        console.log("new data added");
+      });
+      res.redirect("/");
+    }
+  });
 });
 
-// SAVE ROUTE
-
 // DELETE ROUTE
+app.post("/delete/:id", (req, res) => {
+  const data = fs.readFileSync(__dirname + "/data.json");
+
+  const parsedData = JSON.parse(data);
+  console.log(parsedData);
+  parsedData.find((e, i) => {
+    console.log(e.id, req.params.id);
+    if (e.id == req.params.id) {
+      parsedData.splice(i, 1);
+      const stringifiedData = JSON.stringify(parsedData);
+      fs.writeFileSync("data.json", stringifiedData, (err) => {
+        if (err) throw err;
+        console.log("new data added");
+      });
+      res.redirect("/");
+    }
+  });
+});
 
 app.listen(3000);
