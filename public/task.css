@@ -11,8 +11,21 @@
   opacity: 0;
 }
 .addContainer {
-  display: none;
-  opacity: 0;
+  height: 0px;
+  width: 530px;
+  background-color: rgb(245, 245, 245);
+  overflow-y: hidden;
+  transition: height 0.1s linear;
+}
+
+.editContainer {
+  height: 0px;
+  width: 100%;
+  background-color: rgb(245, 245, 245);
+  overflow-y: hidden;
+  transition: height 0.1s linear;
+  margin-top: -30px;
+  border-radius: 0 0 10px 10px;
 }
 
 * {
@@ -24,13 +37,29 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  background-color: rgb(226, 198, 255);
 }
 
 /* HEADER */
 header {
   display: flex;
-  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: rgb(245, 245, 245);
+  padding: 50px 0 30px 0;
 }
+.headerContent {
+  width: 500px;
+}
+.middleContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* LOGO */
 .logo {
   display: flex;
   flex-direction: row;
@@ -39,9 +68,207 @@ header {
 .logoTitle {
   color: rgb(141, 30, 255);
   font-family: "brandon_grotesqueblack";
-  font-size: 50px;
+  font-size: 32px;
 }
 .logoImg {
   width: auto;
-  height: 60px;
+  height: 45px;
+}
+
+/* HEADER DESCRIPTION */
+.logoHeading {
+  padding: 8px 0;
+  font-family: "Montserrat";
+  font-weight: 600;
+  font-size: 40px;
+  color: rgb(64, 0, 129);
+}
+.logoDescription {
+  font-family: "Montserrat";
+  font-weight: 500;
+  font-size: 14px;
+  color: rgb(120, 37, 210);
+}
+
+/* ADD TASK BUTTON */
+.addTaskBtn,
+.addBtn {
+  width: 45px;
+  height: 45px;
+  font-size: 35px;
+  border-radius: 70px;
+  border-style: none;
+  background-color: rgb(64, 0, 129);
+  color: white;
+  cursor: pointer;
+  transition: font-size 0.1s;
+}
+.addTaskBtn:hover,
+.addTaskBtn:active {
+  font-size: 40px;
+  color: rgb(64, 0, 129);
+  background-color: white;
+}
+.addBtn:hover {
+  font-size: 40px;
+  color: white;
+  background-color: rgb(65, 177, 65);
+}
+
+/* ADD FORM */
+.addContainer {
+  border-style: none;
+  border-radius: 13px;
+}
+.addForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  font-family: Montserrat;
+  padding: 15px;
+  height: 150px;
+}
+.addForm .taskTitle {
+  font-size: 22px;
+  font-weight: 700;
+  color: rgb(64, 0, 129);
+}
+.addForm .dateTitle {
+  font-size: 18px;
+  font-family: Montserrat;
+  font-weight: 700;
+  color: rgb(64, 0, 129);
+}
+.bottomSection {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.bottomSection .dateSection {
+  display: flex;
+  flex-direction: row;
+}
+.taskInput {
+  height: 30px;
+  width: 75%;
+  border-style: none;
+  border-radius: 5px;
+}
+.dateSection {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.dateDivider {
+  color: rgb(64, 0, 129);
+  font-weight: bold;
+  padding: 0 6px;
+  font-size: 25px;
+}
+.dayInput,
+.monthInput {
+  height: 30px;
+  width: 25%;
+  background-color: rgb(229, 229, 229);
+  border-style: none;
+  border-radius: 5px;
+}
+.dayInput,
+.monthInput,
+.taskInput {
+  font-family: Montserrat;
+  font-size: 17px;
+  font-weight: 700;
+  padding: 0 5px;
+  color: rgb(120, 37, 210);
+  background-color: rgb(229, 229, 229);
+}
+
+/* TASK CONTAINER */
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding-top: 8px;
+}
+.taskContainer {
+  display: flex;
+  justify-content: center;
+  width: 500px;
+}
+.task {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 480px;
+  font-family: Montserrat;
+  background-color: rgb(245, 245, 245);
+  margin: 20px 0;
+  border-radius: 13px;
+  padding: 7px 10px;
+}
+
+/* CHECKMARK BUTTON */
+.completeBtn {
+  border-style: none;
+  border-radius: 20px;
+  background-color: rgb(64, 0, 129);
+  width: 35px;
+  height: 35px;
+  margin-left: 5px;
+  transition: background-color 0.1s;
+  cursor: pointer;
+}
+.checkMarkBtn {
+  filter: brightness(0) invert(1);
+  width: 20px;
+  height: 20px;
+  transition: filter 0.1s;
+}
+.completeBtn:hover {
+  background-color: rgb(65, 177, 65);
+}
+.completeBtn:hover .checkMarkBtn {
+  width: 23px;
+  height: 23px;
+}
+
+/* EDIT BUTTON/DELETE BUTTON */
+.editBtn,
+.deleteBtn {
+  border-style: none;
+}
+.editImg,
+.deleteImg {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}
+.editBtn {
+  margin-right: 5px;
+}
+
+.edit-delete-btns {
+  display: flex;
+  flex-direction: row;
+}
+
+/* DATE */
+.addDateContainer .dateTitle {
+  color: rgb(64, 0, 129);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+}
+.addDateContainer .date {
+  color: rgb(120, 37, 210);
+}
+
+/* TASK TITLE */
+.taskTitle {
+  font-weight: 600;
+  width: 57%;
+  color: rgb(64, 0, 129);
 }

@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
   const data = fs.readFileSync(__dirname + "/data.json");
 
   // PARSED JSON
-  const parsedData = JSON.parse(data);
+  const parsedData = JSON.parse(data).activeTasks;
 
   res.render("index", { tasks: parsedData });
 });
@@ -36,7 +36,7 @@ app.post("/add", (req, res) => {
   const parsedData = JSON.parse(data);
 
   // PUSHING DATA TO JSON FILE
-  parsedData.push({
+  parsedData.activeTasks.push({
     task: `${req.body.task}`,
     day: `${req.body.day}`,
     month: `${req.body.month}`,
@@ -61,9 +61,12 @@ app.post("/save/:id", (req, res) => {
   const data = fs.readFileSync(__dirname + "/data.json");
 
   const parsedData = JSON.parse(data);
-  parsedData.find((e) => {
+  parsedData.activeTasks.find((e) => {
     if (e.id == req.params.id) {
-      e.task = req.body.editedTask;
+      e.task = req.body.task;
+      e.day = req.body.day;
+      e.month = req.body.month;
+      console.log(e);
       const stringifiedData = JSON.stringify(parsedData);
       fs.writeFileSync("data.json", stringifiedData, (err) => {
         if (err) throw err;
@@ -79,11 +82,29 @@ app.post("/delete/:id", (req, res) => {
   const data = fs.readFileSync(__dirname + "/data.json");
 
   const parsedData = JSON.parse(data);
-  console.log(parsedData);
-  parsedData.find((e, i) => {
+  parsedData.activeTasks.find((e, i) => {
     console.log(e.id, req.params.id);
     if (e.id == req.params.id) {
-      parsedData.splice(i, 1);
+      parsedData.activeTasks.splice(i, 1);
+      const stringifiedData = JSON.stringify(parsedData);
+      fs.writeFileSync("data.json", stringifiedData, (err) => {
+        if (err) throw err;
+        console.log("new data added");
+      });
+      res.redirect("/");
+    }
+  });
+});
+
+// COMPLETE ROUTE
+app.post("/complete/:id", (req, res) => {
+  const data = fs.readFileSync(__dirname + "/data.json");
+
+  const parsedData = JSON.parse(data);
+  parsedData.activeTasks.find((e, i) => {
+    if (e.id == req.params.id) {
+      parsedData.completedTasks.push(e);
+      parsedData.activeTasks.splice(i, 1);
       const stringifiedData = JSON.stringify(parsedData);
       fs.writeFileSync("data.json", stringifiedData, (err) => {
         if (err) throw err;

@@ -6,42 +6,60 @@ html(lang="en")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         title Taches
         link(rel="stylesheet", href="/task.css" type="text/css" charset="utf-8")
+        link(rel="preconnect", href="https://fonts.googleapis.com")
+        link(rel="preconnect", href="https://fonts.gstatic.com" crossorigin)
+        link(rel="stylesheet", href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&display=swap")
     body
         header
-            section.leftContainer
+            section.headerContent
                 section.logo
                     p.logoTitle TACHES
                     img.logoImg(src="/images/logo/Taches.png", alt="Logo")
-                p.logoHeading Active Tasks
+                section.middleContainer
+                    p.logoHeading Active Tasks
+                    button.addTaskBtn +
                 p.logoDescription Add tasks as you wish.
-            section.rightContainer
-                button.addTaskBtn +
         main
             section.addContainer
                 form.addForm(action="/add", method="POST")
                     p.taskTitle Task
                     input.taskInput(type="text", name="task")
-                    p.dateTitle Date
                     section.dateContainer
-                        input.dayInput(type="number", name="day")
-                        p.dateDivider /
-                        input.monthInput(type="number", name="month")
-                    button.addBtn(type="submit") +
+                        p.dateTitle Date
+                        section.bottomSection
+                            section.dateSection
+                                input.monthInput(type="text", name="month")
+                                p.dateDivider /
+                                input.dayInput(type="text", name="day")
+                            button.addBtn(type="submit") +
             section.taskContainer 
                 if tasks.length > 0
                     .grid 
                         each task in tasks
                             section.task
                                 form(action=("/complete/" + task.id) method="POST") 
-                                    button.completeBtn(type="submit") &#10003;
-                                section.dateContainer 
-                                    p.dateTitle 
+                                    button.completeBtn(type="submit")
+                                        img.checkMarkBtn(src="/images/icons/check-mark.png", alt="")
+                                section.addDateContainer 
+                                    p.dateTitle Date
                                     p.date #{task.day} / #{task.month}
                                 p.taskTitle #{task.task}
-                                button.editBtn Edit
-                                form(action=('/save/'+task.id) method="POST")
-                                    input.saveinput(type="text", name="editedTask" placeholder=task.task)
-                                    button.saveBtn(type="submit") Save
-                                form(action=('/delete/' + task.id) method="POST")
-                                    button.deleteBtn(type="submit") Delete
+                                section.edit-delete-btns
+                                    button.editBtn
+                                        img.editImg(src="/images/icons/edit-icon.png", alt="")
+                                    form(action=('/delete/' + task.id) method="POST")
+                                        button.deleteBtn(type="submit")
+                                            img.deleteImg(src="/images/icons/delete-icon.png", alt="")
+                            section.editContainer
+                                form.addForm(action=("/save/"+ task.id), method="POST")
+                                    p.taskTitle Task
+                                    input.taskInput(type="text", name="task" placeholder =(task.task))
+                                    section.dateContainer
+                                        p.dateTitle Date
+                                        section.bottomSection
+                                            section.dateSection
+                                                input.monthInput(type="text", name="month" placeholder=(task.month))
+                                                p.dateDivider /
+                                                input.dayInput(type="text", name="day" placeholder=(task.day))
+                                            button.addBtn(type="submit") +
         script(src="tt.js")
